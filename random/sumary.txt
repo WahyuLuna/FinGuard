@@ -1,0 +1,69 @@
+link : https://www.kaggle.com/datasets/thuandao/bank-transactions-dataset-for-fraud-detection
+
+About Dataset
+With the rapid growth of digital banking and online transactions, financial institutions increasingly rely on data to understand transaction behavior, detect suspicious activities, and improve risk management.
+
+This dataset contains 50,000 bank transaction records that simulate real-world banking activity. It includes information about transaction details, customer demographics, device and channel metadata, as well as security-related indicators.
+
+The dataset can be used to explore various financial and behavioral questions such as:
+
+Which types of transactions occur most frequently?
+How do transaction amounts vary across channels and locations?
+Are there patterns in device usage or login attempts?
+How do customer attributes relate to transaction behavior?
+What transaction characteristics may indicate unusual activity?
+
+This dataset is suitable for:
+
+Exploratory Data Analysis (EDA)
+Machine Learning Projects
+Anomaly Detection
+Financial Transaction Analytics
+Data Warehousing and Data Modeling Practice
+
+⚠️ Note on Machine Learning Usage
+
+This dataset does not include a predefined target label (such as a fraud flag). Because of this, it is not designed for traditional supervised learning tasks.
+
+Instead, the dataset is well suited for unsupervised learning and anomaly detection, where the goal is to discover unusual transaction patterns or behaviors.
+
+Common techniques that can be explored include:
+
+Clustering algorithms (e.g., K-Means) to group similar transaction patterns
+Isolation Forest for anomaly detection
+Local Outlier Factor (LOF) for density-based outlier detection
+Behavioral pattern analysis using transaction amount, device usage, and login attempts
+
+These techniques can help identify transactions that deviate from normal behavior and may represent potential anomalies.
+
+📚 Metadata
+
+TransactionID → Unique identifier for each transaction.
+
+AccountID → Unique identifier for the bank account involved in the transaction.
+
+TransactionAmount → Amount of money transferred in the transaction.
+
+TransactionDate → Date when the transaction occurred.
+
+TransactionType → Type of transaction (e.g., withdrawal, deposit, transfer, payment).
+
+TransactionDuration → Time taken to complete the transaction.
+
+AccountBalance → Account balance after the transaction.
+
+Channel → Channel used to perform the transaction (ATM, mobile banking, online banking, etc.).
+
+Location → Geographic location where the transaction was initiated.
+
+DeviceID → Identifier of the device used for the transaction.
+
+IP Address → IP address associated with the transaction session.
+
+MerchantID → Identifier of the merchant involved in the transaction (if applicable).
+
+CustomerAge → Age of the account holder.
+
+CustomerOccupation → Occupation category of the customer.
+
+LoginAttempts → Number of login attempts recorded before completing the transaction.

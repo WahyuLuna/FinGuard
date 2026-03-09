@@ -1,0 +1,129 @@
+================================================================================
+PROJECT TITLE: FINGUARD ANOMALY DETECTION SYSTEM (V1.0)
+ARCHITECT: Senior Data Architect & UI/UX Specialist
+CLIENT REFERENCE: database_schema.txt
+================================================================================
+
+1. MODULAR PROJECT STRUCTURE
+--------------------------------------------------------------------------------
+Sistem dibangun dengan prinsip Separation of Concerns (SoC) untuk skalabilitas:
+
+finguard_app/
+├── app.py                  # Entry point (Main dashboard)
+├── assets/
+│   ├── css/
+│   │   └── style.css       # Custom Professional Banking Theme
+│   └── images/
+│       └── logo.png        # Branding assets
+├── core/
+│   ├── model_engine.py     # Isolation Forest & K-Means Logic
+│   └── anomaly_logic.py    # IP/DeviceID Security Analysis
+├── pages/
+│   ├── 01_Realtime_Monitor.py
+│   ├── 02_Analytics_Deep_Dive.py
+│   └── 03_Security_Logs.py
+├── utils/
+│   ├── data_loader.py      # Preprocessing & Type Conversion
+│   └── processor.py        # Feature Engineering & Normalization
+└── requirements.txt        # Dependencies (Streamlit, Scikit-learn, Plotly)
+
+2. ADVANCED DATA PIPELINE (50,000 RECORDS)
+--------------------------------------------------------------------------------
+Pipeline dirancang untuk efisiensi memori (Memory-Efficient Processing):
+- Pembersihan: Handling missing values pada MerchantID dan redundansi TransactionID.
+- Konversi: 'TransactionDate' dikonversi ke format datetime untuk ekstraksi 
+  fitur temporal (Hour, Day of Week).
+- Normalisasi: Fitur 'TransactionAmount' dan 'AccountBalance' menggunakan 
+  RobustScaler untuk memitigasi dampak outlier ekstrem sebelum training.
+- Encoding: Label Encoding untuk 'Channel' dan 'CustomerOccupation'.
+
+3. UNSUPERVISED ML ENGINE
+--------------------------------------------------------------------------------
+Model mendeteksi anomali pada dimensi perilaku (Behavioral Dimensions):
+- Isolation Forest: Digunakan untuk mendeteksi outlier global pada fitur 
+  numerik (TransactionAmount vs LoginAttempts).
+- K-Means Clustering: Mengelompokkan transaksi ke dalam k-cluster. Transaksi 
+  yang berada jauh dari centroid (Distance-based) ditandai sebagai anomali.
+- Fokus Fitur: 'LoginAttempts' > 3 dan 'TransactionDuration' yang terlalu 
+  singkat/lama dianalisis secara mendalam.
+
+4. STREAMLIT HTML/CSS CUSTOMIZATION (PROFESSIONAL DARK/NAVY)
+--------------------------------------------------------------------------------
+Snippet CSS untuk meng-override UI standar Streamlit:
+
+/* assets/css/style.css */
+[data-testid="stAppViewContainer"] {
+    background-color: #0a192f; /* Deep Navy Background */
+    color: #e6f1ff;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 28px;
+    font-weight: bold;
+    color: #64ffda; /* Teal Highlight */
+}
+
+.metric-card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    border-left: 5px solid #64ffda;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+5. SECURITY ANALYSIS LOGIC
+--------------------------------------------------------------------------------
+Logika deteksi lintas parameter (Cross-Parameter Logic):
+- Identity Theft Detection: Flagging jika satu 'AccountID' mengakses sistem 
+  melalui lebih dari 2 'DeviceID' atau 3 'IP Address' yang berbeda dalam 
+  rentang waktu 1 jam.
+- Velocity Check: Deteksi transaksi beruntun dari 'Location' yang berjauhan 
+  geografis (impossible travel).
+
+6. CORE APP SKELETON (app.py)
+--------------------------------------------------------------------------------
+import streamlit as st
+import pandas as pd
+from utils.data_loader import load_and_clean_data
+from core.model_engine import run_isolation_forest
+
+# Set Page Config
+st.set_page_config(page_title="FinGuard Anomaly", layout="wide")
+
+# Load CSS
+with open("assets/css/style.css") as f:
+    st.markdown(f"<style>{f.read()}</style>", unsafe_unsafe_allow_html=True)
+
+# Sidebar & Header
+st.title("🛡️ FinGuard Anomaly Detection")
+st.markdown("---")
+
+# UI: Metric Cards using Markdown
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.markdown("""<div class="metric-card">
+                   <p>Total Transactions</p>
+                   <h3>50,231</h3>
+                   </div>""", unsafe_allow_html=True)
+with col2:
+    st.markdown("""<div class="metric-card" style="border-left-color: #ff4b4b;">
+                   <p>Anomalies Detected</p>
+                   <h3>124</h3>
+                   </div>""", unsafe_allow_html=True)
+with col3:
+    st.markdown("""<div class="metric-card">
+                   <p>System Health</p>
+                   <h3>99.9%</h3>
+                   </div>""", unsafe_allow_html=True)
+
+# Data Visualization Section
+# ... [Logic for Plotly Maps & Distribution Charts] ...
+
+# Anomaly Alerts Table
+st.subheader("⚠️ High-Risk Anomalies")
+# Filtered DataFrame based on Isolation Forest result
+# st.dataframe(anomaly_df)
+
+================================================================================
+END OF DOCUMENT
+================================================================================
